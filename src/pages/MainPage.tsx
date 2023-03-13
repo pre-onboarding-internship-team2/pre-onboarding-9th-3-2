@@ -1,5 +1,11 @@
+import Graph from "../components/Graph";
+
 const MainPage = () => {
-  return <div></div>;
+  return (
+    <section>
+      <Graph />
+    </section>
+  );
 };
 
 export default MainPage;
