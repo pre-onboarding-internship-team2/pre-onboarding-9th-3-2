@@ -2,6 +2,31 @@
 
 주어진 데이터를 기반으로 시계열 차트 만들기
 
+## 시작하기
+
+```
+npm install
+
+npm run dev // development server
+
+npm run build // build
+
+npm start // production server
+```
+
+## 기술
+
+- 언어
+
+  - Typescript
+
+- 라이브러리
+
+  - chart.js && react-chartjs-2
+
+- 프레임워크
+  - Next JS
+
 ## 팀원 구성표
 
 <table>
