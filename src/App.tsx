@@ -1,8 +1,13 @@
 import React from 'react';
-import Chart from 'components/Chart';
+import './index.css';
+import Chart from 'pages/Chart';
 
 function App() {
-  return <Chart />;
+  return (
+    <div className="container mx-auto pt-56">
+      <Chart />
+    </div>
+  );
 }
 
 export default App;
