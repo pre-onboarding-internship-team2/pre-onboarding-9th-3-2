@@ -1,5 +1,12 @@
+import { Routes, Route } from "react-router-dom";
+import ChartPage from "./components/ChartPage";
+
 function App() {
-	return <div className="App"></div>;
+	return (
+		<Routes>
+			<Route path="/" element={<ChartPage />} />
+		</Routes>
+	);
 }
 
 export default App;
