@@ -1,12 +1,15 @@
-import { useState } from 'react';
-import { Chart } from 'react-chartjs-2';
-import useChartData from '../hooks/useData';
-import { getChartOption } from '../utils/getChartOption';
+import { Chart, ChartProps } from 'react-chartjs-2';
+import { ChartData, ChartOptions } from 'chart.js';
+import { TimeSeriesChartDataType } from '../types/chartData.types';
 import './TimeSeriesChart.style.css';
 
-function TimeSeriesChart() {
-    const [chartOption] = useState(getChartOption);
-    const { chartData } = useChartData();
+function TimeSeriesChart({
+    chartData,
+    chartOption,
+}: {
+    chartData: ChartData<'bar' | 'line', TimeSeriesChartDataType[]>;
+    chartOption: ChartOptions<'bar' | 'line'>;
+}) {
     return (
         <div className="chart-container">
             <Chart type="bar" data={chartData} options={chartOption} />
