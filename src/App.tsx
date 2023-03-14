@@ -1,10 +1,10 @@
 import './App.css';
 import TimeSeriesChart from './components/TimeSeriesChart';
-import useData from './hooks/useData';
+import registChartJS from './utils/registChartJS';
+
+registChartJS();
 
 function App() {
-    useData();
-
     return (
         <div className="App">
             <TimeSeriesChart />
