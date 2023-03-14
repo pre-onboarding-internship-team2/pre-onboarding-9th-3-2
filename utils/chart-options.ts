@@ -1,6 +1,6 @@
 export const options = {
   responsive: true,
-  maintainAspectRatio: true,
+  maintainAspectRatio: false,
   interaction: {
     mode: "index" as const,
     intersect: false,
@@ -36,7 +36,7 @@ export const options = {
     },
   },
   hover: {
-    mode: "point" as const,
+    mode: "index" as const,
     intersect: false,
   },
   plugins: {

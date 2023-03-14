@@ -14,7 +14,6 @@ import {
 import { Chart } from "react-chartjs-2";
 import { getChartInfo } from "@/utils/chart-api";
 import { options } from "@/utils/chart-options";
-import { useEffect, useState } from "react";
 
 interface ChartsType {
   time: string;
@@ -41,6 +40,7 @@ ChartJS.register(
 
 const HomePage: NextPage<Props> = ({ charts }) => {
   const labels = charts.map((chart) => `${chart.id} / ${chart.time.slice(11)}`);
+
   const data = {
     labels,
     datasets: [
@@ -49,14 +49,15 @@ const HomePage: NextPage<Props> = ({ charts }) => {
         label: "Bar",
         yAxisID: "bar",
         data: charts.map((chart) => chart.value_bar),
-        backgroundColor: "teal",
+        backgroundColor: "rgba(0,128,128, 0.5)",
+        hoverBackgroundColor: "rgba(0, 128,128, 1)",
       },
       {
         type: "line" as const,
         label: "Area",
         yAxisID: "area",
         data: charts.map((chart) => chart.value_area),
-        backgroundColor: "orange",
+        backgroundColor: "rgba(238,130,238, 1)",
         fill: true,
       },
     ],
@@ -66,7 +67,9 @@ const HomePage: NextPage<Props> = ({ charts }) => {
     <Chart
       style={{
         position: "relative",
-        height: "80vh",
+        maxWidth: "90vw",
+        height: "70vh",
+        maxHeight: "70vh",
       }}
       type="bar"
       options={options}
