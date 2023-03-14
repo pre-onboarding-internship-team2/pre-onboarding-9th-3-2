@@ -18,6 +18,7 @@ function getAriaDataset(dataList: TimeSeriesChartDataType[]) {
         yAxisID: 'area',
         borderColor: '#129887',
         backgroundColor: '#34fc87',
+        fill: true,
     };
 }
 

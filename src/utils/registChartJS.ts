@@ -9,6 +9,7 @@ import {
     LineElement,
     PointElement,
     Tooltip,
+    Filler,
 } from 'chart.js';
 
 export default function registChartJS() {
@@ -22,5 +23,6 @@ export default function registChartJS() {
         Tooltip,
         LineController,
         BarController,
+        Filler,
     );
 }
