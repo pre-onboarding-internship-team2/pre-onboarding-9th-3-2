@@ -37,6 +37,9 @@ function useData() {
       stroke: {
         width: [0, 2, 5],
       },
+      fill: {
+        opacity: 0.4,
+      },
       xaxis: {
         categories: historicalData.map((data) => data.datetime),
       },
