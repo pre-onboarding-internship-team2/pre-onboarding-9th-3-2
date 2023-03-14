@@ -4,10 +4,14 @@ import Chart from 'react-apexcharts';
 import useData from '../hooks/useData';
 
 function AreaBarChart() {
-  const { isLoading, chartOptions } = useData();
+  const { isLoading, isError, error, chartOptions } = useData();
 
   if (isLoading) {
     return <span>Loading...</span>;
+  }
+
+  if (isError) {
+    return <span>Error: {error.message}</span>;
   }
 
   return (

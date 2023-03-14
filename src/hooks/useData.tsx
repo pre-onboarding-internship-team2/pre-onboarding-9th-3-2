@@ -3,14 +3,18 @@ import { IChart, IHistoricalData } from '../components/types';
 import { fetchData } from '../api/api';
 
 function useData() {
-  const { isLoading, isError, data: data, error } = useQuery<IChart>('flexsys', fetchData);
+  const { isLoading, isError, data: data, error } = useQuery<IChart, Error>('flexsys', fetchData);
 
   if (isLoading) {
     return { isLoading };
   }
 
-  const historicalData = Object.entries(data!.response).map(([key, val]) => {
-    return { datetime: key, ...val };
+  if (isError) {
+    return { isError, error };
+  }
+
+  const historicalData = Object.entries(data!.response).map(([time, data]) => {
+    return { datetime: time, ...data };
   }) as IHistoricalData[];
 
   // TODO: 필터링
@@ -78,7 +82,7 @@ function useData() {
       },
     ],
   };
-  return { isLoading, chartOptions };
+  return { chartOptions };
 }
 
 export default useData;
