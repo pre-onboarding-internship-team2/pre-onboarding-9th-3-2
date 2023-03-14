@@ -1,4 +1,4 @@
-import { ResponseData } from '../types/reponse';
+import { ResponseData } from '../types/response.types';
 
 const httpClient = {
     async loadData(): Promise<ResponseData | null> {
