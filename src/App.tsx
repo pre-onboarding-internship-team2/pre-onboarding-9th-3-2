@@ -1,7 +1,14 @@
-import React from 'react';
+import AreaBarChart from './components/AreaBarChart';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 function App() {
-  return <h2>Title</h2>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AreaBarChart />
+    </QueryClientProvider>
+  );
 }
 
 export default App;
