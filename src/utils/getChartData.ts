@@ -1,4 +1,10 @@
-import { X_AXIS_KEY, Y_AXIS_KEY, VALUE_AREA_KEY, VALUE_BAR_KEY } from '../consts/chart.const';
+import {
+    X_AXIS_KEY,
+    Y_AXIS_KEY,
+    VALUE_AREA_KEY,
+    VALUE_BAR_KEY,
+    COLORS,
+} from '../consts/chart.const';
 import { TimeSeriesChartDataType } from '../types/chartData.types';
 import { ResponseData } from '../types/response.types';
 
@@ -8,7 +14,7 @@ import { ResponseData } from '../types/response.types';
 function getAriaDataset(dataList: TimeSeriesChartDataType[]) {
     return {
         type: 'line' as const,
-        label: 'area',
+        label: VALUE_AREA_KEY,
         data: dataList,
         parsing: {
             xAxisKey: X_AXIS_KEY,
@@ -16,24 +22,32 @@ function getAriaDataset(dataList: TimeSeriesChartDataType[]) {
         },
         borderWidth: 2,
         yAxisID: 'area',
-        borderColor: '#129887',
-        backgroundColor: '#34fc87',
+        borderColor: COLORS.PINK,
+        backgroundColor: COLORS.DARK_PINK,
+        pointBorderWidth: 0,
+        pointHoverBorderColor: COLORS.PINK,
+        pointHoverBorderWidth: 2,
+        pointHoverBackgroundColor: COLORS.PINK,
         fill: true,
+        order: 1,
     };
 }
 
 function getBarDataset(dataList: TimeSeriesChartDataType[]) {
     return {
         type: 'bar' as const,
-        label: 'bar',
+        label: VALUE_BAR_KEY,
         data: dataList,
         parsing: {
             xAxisKey: X_AXIS_KEY,
             yAxisKey: `${Y_AXIS_KEY}.${VALUE_BAR_KEY}`,
         },
         yAxisID: 'bar',
-        borderColor: '#36A2EB',
-        backgroundColor: '#9BD0F5',
+        borderColor: COLORS.BLUE,
+        backgroundColor: COLORS.DARK_BLUE,
+        hoverBorderColor: COLORS.BLUE,
+        hoverBackgroundColor: COLORS.BLUE,
+        order: 2,
     };
 }
 
