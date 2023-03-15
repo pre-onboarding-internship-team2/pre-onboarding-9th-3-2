@@ -43,13 +43,13 @@ export default function TimeSeriesChart({ props }: { props: TimeSeriesProps }) {
           intersect: false,
         },
         scales: {
-          area: {
+          yLeft: {
             type: "linear" as const,
             display: true,
             position: "left" as const,
             title: { display: true, text: yAxisLeft.name },
           },
-          bar: {
+          yRight: {
             type: "linear" as const,
             display: true,
             position: "right" as const,
@@ -62,7 +62,7 @@ export default function TimeSeriesChart({ props }: { props: TimeSeriesProps }) {
         datasets: [
           {
             type: "line" as const,
-            yAxisID: "area",
+            yAxisID: "yLeft",
             fill: true,
             label: yAxisLeft.name,
             data: yAxisLeft.data,
@@ -71,7 +71,7 @@ export default function TimeSeriesChart({ props }: { props: TimeSeriesProps }) {
           },
           {
             type: "bar" as const,
-            yAxisID: "bar",
+            yAxisID: "yRight",
             label: yAxisRight.name,
             data: yAxisRight.data,
             borderColor: "#69bded",
