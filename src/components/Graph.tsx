@@ -125,7 +125,7 @@ const Graph = () => {
     ],
   };
   return (
-    <article>
+    <article className="w-full h-96 mt-6 flex justify-center">
       <Chart type="line" options={options} data={data} />
     </article>
   );
