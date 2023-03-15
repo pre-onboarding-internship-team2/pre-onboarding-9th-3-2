@@ -30,10 +30,11 @@ export type TimeSeriesProps = {
   xAxisData: string[];
   yAxisLeft: { name: string; data: number[] };
   yAxisRight: { name: string; data: number[] };
+  extraInfo?: { name: string; data: string[] };
 };
 
 export default function TimeSeriesChart({ props }: { props: TimeSeriesProps }) {
-  const { xAxisData, yAxisLeft, yAxisRight } = props;
+  const { xAxisData, yAxisLeft, yAxisRight, extraInfo } = props;
 
   return (
     <Chart
@@ -54,6 +55,16 @@ export default function TimeSeriesChart({ props }: { props: TimeSeriesProps }) {
             display: true,
             position: "right" as const,
             title: { display: true, text: yAxisRight.name },
+          },
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              afterBody: (context) =>
+                extraInfo
+                  ? `${extraInfo.name}: ${extraInfo.data[context[0].dataIndex]}`
+                  : "",
+            },
           },
         },
       }}
