@@ -21,6 +21,7 @@ import {
   reduceAreaData,
   reduceBarData,
   reduceDataColor,
+  reduceSelectedDataColor,
 } from "../functions/filterFunc";
 import { dataArray } from "../functions/funcData";
 
@@ -41,6 +42,7 @@ ChartJS.register(
 const Graph = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
+  const currentParams = new URLSearchParams(location.search).get("id");
 
   const labels = reduceByMinutes();
 
@@ -57,8 +59,13 @@ const Graph = () => {
       tooltip: {
         callbacks: {
           label: (context) => {
-            const idx = context.dataIndex;
-            return `${Object.values(dataArray[idx])[0].id} : ${context.raw}`;
+            const id = Object.values(dataArray[context.dataIndex])[0].id;
+            if (!currentParams) return `${id} : ${context.raw}`;
+            if (currentParams === id) {
+              return `${id} : ${context.raw}`;
+            } else {
+              return "클릭 시 해당 구역 데이터가 나타납니다.";
+            }
           },
         },
       },
@@ -75,9 +82,8 @@ const Graph = () => {
     },
     onClick: (event, element) => {
       if (element.length === 0) return;
-      const currentParams = new URLSearchParams(location.search);
       const currentID = Object.values(dataArray[element[0].index])[0].id;
-      if (currentParams.get("id") === currentID) {
+      if (currentParams === currentID) {
         setSearchParams();
         return;
       }
@@ -95,8 +101,14 @@ const Graph = () => {
         type: "line" as const,
         label: "LINE",
         yAxisID: "right-y",
+        borderJoinStyle: "round",
+        borderColor: "#3282B8",
         borderWidth: 2,
-        borderColor: reduceDataColor(),
+        pointBorderColor: currentParams
+          ? reduceSelectedDataColor(currentParams)
+          : reduceDataColor(),
+        pointBorderWidth: 3,
+        pointBackgroundColor: "white",
         fill: true,
         backgroundColor: "rgba(53, 162, 235, 0.5)",
         data: reduceAreaData(),
@@ -105,7 +117,9 @@ const Graph = () => {
         type: "bar" as const,
         label: "BAR",
         yAxisID: "left-y",
-        backgroundColor: reduceDataColor(),
+        backgroundColor: currentParams
+          ? reduceSelectedDataColor(currentParams)
+          : reduceDataColor(),
         data: reduceBarData(),
       },
     ],

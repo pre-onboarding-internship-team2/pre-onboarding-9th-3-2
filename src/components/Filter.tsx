@@ -17,13 +17,13 @@ const Filter = () => {
   };
 
   return (
-    <>
+    <nav>
       {idArray.map((id) => (
         <button key={idArray.indexOf(id)} onClick={() => handleFilter(id)}>
           {id}
         </button>
       ))}
-    </>
+    </nav>
   );
 };
 
