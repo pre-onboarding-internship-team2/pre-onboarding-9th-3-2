@@ -15,7 +15,7 @@ import {
   ChartOptions,
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import {
   reduceByMinutes,
   reduceAreaData,
@@ -40,6 +40,7 @@ ChartJS.register(
 
 const Graph = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
 
   const labels = reduceByMinutes();
 
@@ -74,9 +75,15 @@ const Graph = () => {
     },
     onClick: (event, element) => {
       if (element.length === 0) return;
+      const currentParams = new URLSearchParams(location.search);
+      const currentID = Object.values(dataArray[element[0].index])[0].id;
+      if (currentParams.get("id") === currentID) {
+        setSearchParams();
+        return;
+      }
       setSearchParams({
         ...searchParams,
-        id: Object.values(dataArray[element[0].index])[0].id,
+        id: currentID,
       });
     },
   };
