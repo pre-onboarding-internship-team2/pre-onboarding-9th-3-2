@@ -1,4 +1,7 @@
-import { GetStaticProps, NextPage } from "next";
+import { useRef } from "react";
+import { GetServerSideProps, NextPage } from "next";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,7 +26,9 @@ interface ChartsType {
 }
 
 interface Props {
-  charts: ChartsType[];
+  chartData: ChartsType[];
+  colorFilteredByQueryWithBar: string[];
+  colorFilteredByQueryWithArea: string[];
 }
 
 ChartJS.register(
@@ -38,8 +43,18 @@ ChartJS.register(
   Legend,
 );
 
-const HomePage: NextPage<Props> = ({ charts }) => {
-  const labels = charts.map((chart) => `${chart.id} / ${chart.time.slice(11)}`);
+const HomePage: NextPage<Props> = ({
+  chartData,
+  colorFilteredByQueryWithBar,
+  colorFilteredByQueryWithArea,
+}) => {
+  const router = useRouter();
+  const chartRef = useRef<ChartJS<"bar" | "line", string[]>>(null);
+  const locations = [...new Set(chartData.map((chart) => chart.id))];
+
+  const labels = chartData.map(
+    (chart) => `${chart.id} / ${chart.time.slice(11)}`,
+  );
 
   const data = {
     labels,
@@ -48,52 +63,90 @@ const HomePage: NextPage<Props> = ({ charts }) => {
         type: "bar" as const,
         label: "Bar",
         yAxisID: "bar",
-        data: charts.map((chart) => chart.value_bar),
-        backgroundColor: "rgba(0,128,128, 0.5)",
-        hoverBackgroundColor: "rgba(0, 128,128, 1)",
+        data: chartData.map((chart) => chart.value_bar),
+        backgroundColor: colorFilteredByQueryWithBar,
+        hoverBackgroundColor: "rgba(0,128,128, 1)",
       },
       {
         type: "line" as const,
         label: "Area",
         yAxisID: "area",
-        data: charts.map((chart) => chart.value_area),
-        backgroundColor: "rgba(238,130,238, 1)",
+        data: chartData.map((chart) => chart.value_area),
+        pointBackgroundColor: colorFilteredByQueryWithArea,
+        backgroundColor: "rgba(110, 9, 110, 0.5)",
+        pointHoverRadius: 5,
         fill: true,
       },
     ],
   };
 
+  const clickHandler = (e: any) => {
+    if (chartRef.current) {
+      const points = chartRef.current.getElementsAtEventForMode(
+        e,
+        "index",
+        { intersect: true },
+        true,
+      );
+      if (points.length > 0) {
+        const routingName = chartData[points[0].index].id;
+        const routingNumber =
+          locations.findIndex((location) => location === routingName) + 1;
+        router.push(`/?name=${routingName}&nameId=${routingNumber}`);
+      }
+    }
+    return;
+  };
+
   return (
-    <Chart
-      style={{
-        position: "relative",
-        maxWidth: "90vw",
-        height: "70vh",
-        maxHeight: "70vh",
-      }}
-      type="bar"
-      options={options}
-      data={data}
-    />
+    <div className="container">
+      <Chart
+        ref={chartRef}
+        type="line"
+        options={options}
+        data={data}
+        onClick={clickHandler}
+      />
+      {locations.map((location, index) => (
+        <Link
+          href={{ pathname: "", query: { name: location, nameId: index + 1 } }}
+          key={location}
+        >
+          {location}
+        </Link>
+      ))}
+      <button onClick={() => router.push("/")}>reset</button>
+    </div>
   );
 };
 
 export default HomePage;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { query } = context;
   const data = await getChartInfo();
-  const charts = [];
-
-  for (const key in data) {
-    charts.push({
+  const chartData = Object.entries(data).map(([key, value]) => {
+    return {
       time: key,
-      id: data[key].id,
-      value_area: data[key].value_area,
-      value_bar: data[key].value_bar,
-    });
-  }
+      id: value.id,
+      value_area: value.value_area,
+      value_bar: value.value_bar,
+    };
+  });
+
+  const colorFilteredByQueryWithBar = chartData.map((chart) =>
+    chart.id === query.name ? "rgba(0,128,128, 1)" : "rgba(0,128,128, 0.5)",
+  );
+
+  const colorFilteredByQueryWithArea = chartData.map((chart) =>
+    chart.id === query.name ? "rgba(110, 9, 110, 1)" : "rgba(110, 9, 110, 0.5)",
+  );
 
   return {
-    props: { charts },
+    props: {
+      chartData,
+      colorFilteredByQueryWithBar,
+      colorFilteredByQueryWithArea,
+    },
   };
 };

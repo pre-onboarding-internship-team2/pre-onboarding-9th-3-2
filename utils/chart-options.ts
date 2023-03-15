@@ -1,4 +1,6 @@
-export const options = {
+import { ChartOptions } from "chart.js";
+
+export const options: ChartOptions<"bar" | "line"> = {
   responsive: true,
   maintainAspectRatio: false,
   interaction: {
@@ -15,7 +17,6 @@ export const options = {
         text: "Bar",
       },
       ticks: {
-        beginAtZero: true,
         stepSize: 5000,
       },
     },
@@ -35,14 +36,7 @@ export const options = {
       },
     },
   },
-  hover: {
-    mode: "index" as const,
-    intersect: false,
-  },
   plugins: {
-    legend: {
-      position: "top" as const,
-    },
     title: {
       display: true,
       text: "시계열 차트",
