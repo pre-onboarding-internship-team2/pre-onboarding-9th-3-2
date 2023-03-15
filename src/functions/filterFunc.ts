@@ -13,7 +13,7 @@ export const reduceById = (): string[] => {
 };
 
 // 데이터 내 시간대를 추출하여 return하는 함수
-export const reduceBySecond = (): string[] => {
+export const reduceByMinutes = (): string[] => {
   const minutesArray = Object.keys(dataObject);
   return minutesArray;
 };
