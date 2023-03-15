@@ -7,11 +7,17 @@ import { getChartOption } from './utils/getChartOption';
 
 function App() {
     const [chartOption] = useState(getChartOption);
-    const { chartData, locations, isLoading } = useChartData();
+    const { chartData, locations, isLoading, chartRef, onClick } = useChartData();
+
     if (isLoading) return <div>loading...</div>;
     return (
         <div className="App">
-            <TimeSeriesChart chartData={chartData} chartOption={chartOption} />
+            <TimeSeriesChart
+                onClick={onClick}
+                chartData={chartData}
+                chartOption={chartOption}
+                ref={chartRef}
+            />
             <FilterButtons locations={locations} />
         </div>
     );

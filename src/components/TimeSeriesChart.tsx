@@ -1,20 +1,19 @@
-import { Chart, ChartProps } from 'react-chartjs-2';
 import { ChartData, ChartOptions } from 'chart.js';
+import { forwardRef } from 'react';
+import { Chart } from 'react-chartjs-2';
 import { TimeSeriesChartDataType } from '../types/chartData.types';
-import './TimeSeriesChart.style.css';
 
-function TimeSeriesChart({
-    chartData,
-    chartOption,
-}: {
+interface TimeSeriesChartProps {
     chartData: ChartData<'bar' | 'line', TimeSeriesChartDataType[]>;
     chartOption: ChartOptions<'bar' | 'line'>;
-}) {
-    return (
-        <div className="chart-container">
-            <Chart type="bar" data={chartData} options={chartOption} />
-        </div>
-    );
+    onClick: React.MouseEventHandler<HTMLCanvasElement>;
 }
 
-export default TimeSeriesChart;
+// TODO ref type 수정
+export default forwardRef<any, TimeSeriesChartProps>(({ chartData, chartOption, onClick }, ref) => {
+    return (
+        <div className="chart-container">
+            <Chart onClick={onClick} type="bar" data={chartData} options={chartOption} ref={ref} />
+        </div>
+    );
+});
