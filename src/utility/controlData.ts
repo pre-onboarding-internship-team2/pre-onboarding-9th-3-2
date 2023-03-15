@@ -1,4 +1,4 @@
-export const labelUtil = (mockDataKey: string[]): string[] => {
+const labelUtil = (mockDataKey: string[]): string[] => {
 	const labels: string[] = [];
 
 	for (const item of mockDataKey) {
@@ -8,7 +8,7 @@ export const labelUtil = (mockDataKey: string[]): string[] => {
 	return labels;
 };
 
-export const AreaValueUtil = (mockDataArea: any): number[] => {
+const AreaValueUtil = (mockDataArea: any): number[] => {
 	const valueArea: number[] = [];
 
 	for (const item of mockDataArea) {
@@ -17,7 +17,8 @@ export const AreaValueUtil = (mockDataArea: any): number[] => {
 
 	return valueArea;
 };
-export const BarValueUtil = (mockDataBar: any): number[] => {
+
+const BarValueUtil = (mockDataBar: any): number[] => {
 	const valueBar: number[] = [];
 
 	for (const item of mockDataBar) {
@@ -26,3 +27,5 @@ export const BarValueUtil = (mockDataBar: any): number[] => {
 
 	return valueBar;
 };
+
+export { labelUtil, AreaValueUtil, BarValueUtil };

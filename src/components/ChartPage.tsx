@@ -60,10 +60,6 @@ const ChartPage = () => {
 	const valueArea: number[] = [...AreaValueUtil(allValue)];
 	const valueBar: number[] = [...BarValueUtil(allValue)];
 
-	for (let item of allValue) {
-		valueBar.push(item.value_bar);
-	}
-
 	const data = {
 		labels,
 		datasets: [
@@ -88,5 +84,3 @@ const ChartPage = () => {
 };
 
 export default ChartPage;
-
-// labels에 객체의 키 값을 뿌려줘야 됨
