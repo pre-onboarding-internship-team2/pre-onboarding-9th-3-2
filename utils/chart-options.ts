@@ -36,6 +36,10 @@ export const options: ChartOptions<"bar" | "line"> = {
       },
     },
   },
+  animation: {
+    duration: 0,
+    delay: 0,
+  },
   plugins: {
     title: {
       display: true,

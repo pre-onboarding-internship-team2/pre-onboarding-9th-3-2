@@ -8,6 +8,7 @@ export const useChartQuery = (query: { name: string }) => {
     getChartInfo,
     {
       staleTime: 30000,
+      cacheTime: Infinity,
     },
   );
 

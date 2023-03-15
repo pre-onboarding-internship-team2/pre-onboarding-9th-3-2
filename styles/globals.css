@@ -4,7 +4,7 @@
   max-height: 70vh;
 }
 
-a {
+.link {
   display: inline-block;
   margin-top: 20px;
   padding: 2px;
@@ -15,11 +15,11 @@ a {
   cursor: pointer;
 }
 
-a:not(:nth-of-type(1)) {
+.link:not(:nth-of-type(1)) {
   margin-left: 10px;
 }
 
-a[aria-current="location"] {
+.link[aria-current="location"] {
   background-color: red;
   color: white;
 }

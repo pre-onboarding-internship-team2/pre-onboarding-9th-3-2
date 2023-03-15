@@ -1,33 +1,15 @@
 import { useRef } from "react";
-import { GetServerSideProps, NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import { useRouter } from "next/router";
-import Link from "next/link";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  PointElement,
-  LineElement,
-  Filler,
-  LineController,
-  BarController,
-} from "chart.js";
 import { Chart } from "react-chartjs-2";
+import { ChartJSOrUndefined } from "react-chartjs-2/dist/types";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
-import { getChartInfo } from "@/utils/chart-api";
+import { getChartInfo, loadChart } from "@/utils/chart-api";
 import { options } from "@/utils/chart-options";
+import { ChartsType } from "@/utils/chart.types";
+import { chartDatasets } from "@/utils/chart-data";
 import { useChartQuery } from "@/hooks/useChartQuery";
-
-interface ChartsType {
-  time: string;
-  id: string;
-  value_area: string;
-  value_bar: string;
-}
+import LinkContainer from "@/components/link-container";
 
 interface Props {
   chartData: ChartsType[];
@@ -35,19 +17,7 @@ interface Props {
   colorFilteredByQueryWithArea: string[];
 }
 
-ChartJS.register(
-  LinearScale,
-  CategoryScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend,
-  LineController,
-  BarController,
-);
+loadChart();
 
 const HomePage: NextPage<Props> = () => {
   const router = useRouter();
@@ -56,36 +26,13 @@ const HomePage: NextPage<Props> = () => {
     colorFilteredByQueryWithArea,
     colorFilteredByQueryWithBar,
   } = useChartQuery(router.query as { name: string });
-  const chartRef = useRef<ChartJS<"bar" | "line", string[]>>(null);
+  const chartRef = useRef<ChartJSOrUndefined<"bar" | "line", string[]>>(null);
   const locations = [...new Set(chartData.map((chart) => chart.id))];
-
-  const labels = chartData.map(
-    (chart) => `${chart.id} / ${chart.time.slice(11)}`,
+  const data = chartDatasets(
+    chartData,
+    colorFilteredByQueryWithArea,
+    colorFilteredByQueryWithBar,
   );
-
-  const data = {
-    labels,
-    datasets: [
-      {
-        type: "bar" as const,
-        label: "Bar",
-        yAxisID: "bar",
-        data: chartData.map((chart) => chart.value_bar),
-        backgroundColor: colorFilteredByQueryWithBar,
-        hoverBackgroundColor: "rgba(0,128,128, 1)",
-      },
-      {
-        type: "line" as const,
-        label: "Area",
-        yAxisID: "area",
-        data: chartData.map((chart) => chart.value_area),
-        pointBackgroundColor: colorFilteredByQueryWithArea,
-        backgroundColor: "rgba(110, 9, 110, 0.5)",
-        pointHoverRadius: 8,
-        fill: true,
-      },
-    ],
-  };
 
   const clickHandler = (e: any) => {
     if (chartRef.current) {
@@ -114,22 +61,14 @@ const HomePage: NextPage<Props> = () => {
         data={data}
         onClick={clickHandler}
       />
-      {locations.map((location, index) => (
-        <Link
-          href={{ pathname: "", query: { name: location, nameId: index + 1 } }}
-          key={location}
-        >
-          {location}
-        </Link>
-      ))}
-      <Link href={{ pathname: "/" }}>reset</Link>
+      <LinkContainer locations={locations} />
     </div>
   );
 };
 
 export default HomePage;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async () => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(["charts"], getChartInfo);
   return {
