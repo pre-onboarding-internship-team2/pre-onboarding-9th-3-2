@@ -1,30 +1,39 @@
-import {
-	Chart as ChartJS,
-	CategoryScale,
-	LinearScale,
-	PointElement,
-	LineElement,
-	Title,
-	Tooltip,
-	Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
 import mockData from "../data/mockData.json";
 import { labelUtil, AreaValueUtil, BarValueUtil } from "../utility/controlData";
 
-ChartJS.register(
-	CategoryScale,
+import {
+	Chart as ChartJS,
 	LinearScale,
+	CategoryScale,
+	BarElement,
 	PointElement,
 	LineElement,
-	Title,
+	Legend,
 	Tooltip,
-	Legend
+	LineController,
+	BarController,
+} from "chart.js";
+import { Chart } from "react-chartjs-2";
+
+ChartJS.register(
+	LinearScale,
+	CategoryScale,
+	BarElement,
+	PointElement,
+	LineElement,
+	Legend,
+	Tooltip,
+	LineController,
+	BarController
 );
 
 const ChartPage = () => {
 	const allKey = Object.keys(mockData.response);
 	const allValue = Object.values(mockData.response);
+
+	const labels: string[] = [...labelUtil(allKey)];
+	const valueArea: number[] = [...AreaValueUtil(allValue)];
+	const valueBar: number[] = [...BarValueUtil(allValue)];
 
 	const options = {
 		responsive: true,
@@ -56,31 +65,31 @@ const ChartPage = () => {
 		},
 	};
 
-	const labels: string[] = [...labelUtil(allKey)];
-	const valueArea: number[] = [...AreaValueUtil(allValue)];
-	const valueBar: number[] = [...BarValueUtil(allValue)];
-
 	const data = {
 		labels,
 		datasets: [
 			{
+				type: "line" as const,
 				label: "Area",
-				data: valueArea.map((element: number) => element),
 				borderColor: "rgb(255, 99, 132)",
-				backgroundColor: "rgba(255, 99, 132, 0.5)",
+				borderWidth: 2,
+				fill: false,
+				data: valueArea.map((element) => element),
 				yAxisID: "y",
 			},
 			{
+				type: "bar" as const,
 				label: "Bar",
-				data: valueBar.map((element: number) => element),
-				borderColor: "rgb(53, 162, 235)",
-				backgroundColor: "rgba(53, 162, 235, 0.5)",
+				backgroundColor: "rgb(75, 192, 192)",
+				data: valueBar.map((element) => element),
+				borderColor: "white",
+				borderWidth: 2,
 				yAxisID: "y1",
 			},
 		],
 	};
 
-	return <Line options={options} data={data} />;
+	return <Chart type="bar" options={options} data={data} />;
 };
 
 export default ChartPage;
