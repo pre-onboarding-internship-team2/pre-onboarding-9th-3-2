@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { reduceById } from "../functions/filterFunc";
 
@@ -11,9 +10,6 @@ const Filter = () => {
     setSearchParams({ ...searchParams, id: id });
   };
 
-  useEffect(() => {
-    console.log(searchParams.get("id"));
-  }, [searchParams]);
   return (
     <>
       {idArray.map((id) => (

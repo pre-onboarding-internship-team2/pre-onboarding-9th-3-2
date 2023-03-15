@@ -15,6 +15,7 @@ import {
   ChartOptions,
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
+import { useSearchParams } from "react-router-dom";
 import {
   reduceByMinutes,
   reduceAreaData,
@@ -37,63 +38,71 @@ ChartJS.register(
   BarController
 );
 
-const labels = reduceByMinutes();
+const Graph = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
 
-const options: ChartOptions = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top",
-    },
-    title: {
-      display: true,
-      text: "초 단위 데이터 변동그래프",
-    },
-    tooltip: {
-      callbacks: {
-        label: (context) => {
-          const idx = context.dataIndex;
-          return `${Object.values(dataArray[idx])[0].id} : ${context.raw}`;
+  const labels = reduceByMinutes();
+
+  const options: ChartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "초 단위 데이터 변동그래프",
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const idx = context.dataIndex;
+            return `${Object.values(dataArray[idx])[0].id} : ${context.raw}`;
+          },
         },
       },
     },
-  },
-  scales: {
-    ["left-y"]: {
-      position: "left",
-      max: 20000,
+    scales: {
+      ["left-y"]: {
+        position: "left",
+        max: 20000,
+      },
+      ["right-y"]: {
+        position: "right",
+        max: 200,
+      },
     },
-    ["right-y"]: {
-      position: "right",
-      max: 200,
+    onClick: (event, element) => {
+      if (element.length === 0) return;
+      setSearchParams({
+        ...searchParams,
+        id: Object.values(dataArray[element[0].index])[0].id,
+      });
     },
-  },
-};
+  };
 
-const data: ChartData = {
-  labels,
-  datasets: [
-    {
-      type: "line" as const,
-      label: "LINE",
-      yAxisID: "right-y",
-      borderWidth: 2,
-      borderColor: reduceDataColor(),
-      fill: true,
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
-      data: reduceAreaData(),
-    },
-    {
-      type: "bar" as const,
-      label: "BAR",
-      yAxisID: "left-y",
-      backgroundColor: reduceDataColor(),
-      data: reduceBarData(),
-    },
-  ],
-};
-
-const Graph = () => {
+  const data: ChartData = {
+    labels,
+    datasets: [
+      {
+        type: "line" as const,
+        label: "LINE",
+        yAxisID: "right-y",
+        borderWidth: 2,
+        borderColor: reduceDataColor(),
+        fill: true,
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        data: reduceAreaData(),
+      },
+      {
+        type: "bar" as const,
+        label: "BAR",
+        yAxisID: "left-y",
+        backgroundColor: reduceDataColor(),
+        data: reduceBarData(),
+      },
+    ],
+  };
   return (
     <article>
       <Chart type="line" options={options} data={data} />
