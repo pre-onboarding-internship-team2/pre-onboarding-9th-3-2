@@ -47,8 +47,4 @@ const chartOption: ChartOptions<'bar' | 'line'> = {
     },
 };
 
-function getChartOption() {
-    return chartOption;
-}
-
-export { getChartOption };
+export { chartOption };
