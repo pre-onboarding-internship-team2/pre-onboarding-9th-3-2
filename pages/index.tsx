@@ -13,10 +13,14 @@ import {
   PointElement,
   LineElement,
   Filler,
+  LineController,
+  BarController,
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
+import { QueryClient, dehydrate } from "@tanstack/react-query";
 import { getChartInfo } from "@/utils/chart-api";
 import { options } from "@/utils/chart-options";
+import { useChartQuery } from "@/hooks/useChartQuery";
 
 interface ChartsType {
   time: string;
@@ -41,14 +45,17 @@ ChartJS.register(
   Tooltip,
   Filler,
   Legend,
+  LineController,
+  BarController,
 );
 
-const HomePage: NextPage<Props> = ({
-  chartData,
-  colorFilteredByQueryWithBar,
-  colorFilteredByQueryWithArea,
-}) => {
+const HomePage: NextPage<Props> = () => {
   const router = useRouter();
+  const {
+    chartData,
+    colorFilteredByQueryWithArea,
+    colorFilteredByQueryWithBar,
+  } = useChartQuery(router.query as { name: string });
   const chartRef = useRef<ChartJS<"bar" | "line", string[]>>(null);
   const locations = [...new Set(chartData.map((chart) => chart.id))];
 
@@ -74,7 +81,7 @@ const HomePage: NextPage<Props> = ({
         data: chartData.map((chart) => chart.value_area),
         pointBackgroundColor: colorFilteredByQueryWithArea,
         backgroundColor: "rgba(110, 9, 110, 0.5)",
-        pointHoverRadius: 5,
+        pointHoverRadius: 8,
         fill: true,
       },
     ],
@@ -115,7 +122,7 @@ const HomePage: NextPage<Props> = ({
           {location}
         </Link>
       ))}
-      <button onClick={() => router.push("/")}>reset</button>
+      <Link href={{ pathname: "/" }}>reset</Link>
     </div>
   );
 };
@@ -123,30 +130,11 @@ const HomePage: NextPage<Props> = ({
 export default HomePage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { query } = context;
-  const data = await getChartInfo();
-  const chartData = Object.entries(data).map(([key, value]) => {
-    return {
-      time: key,
-      id: value.id,
-      value_area: value.value_area,
-      value_bar: value.value_bar,
-    };
-  });
-
-  const colorFilteredByQueryWithBar = chartData.map((chart) =>
-    chart.id === query.name ? "rgba(0,128,128, 1)" : "rgba(0,128,128, 0.5)",
-  );
-
-  const colorFilteredByQueryWithArea = chartData.map((chart) =>
-    chart.id === query.name ? "rgba(110, 9, 110, 1)" : "rgba(110, 9, 110, 0.5)",
-  );
-
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(["charts"], getChartInfo);
   return {
     props: {
-      chartData,
-      colorFilteredByQueryWithBar,
-      colorFilteredByQueryWithArea,
+      dehydratedState: dehydrate(queryClient),
     },
   };
 };
