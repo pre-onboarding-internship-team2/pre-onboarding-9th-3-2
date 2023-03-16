@@ -8,6 +8,16 @@ const labelUtil = (mockDataKey: string[]): string[] => {
 	return labels;
 };
 
+const IdValueUtil = (mockDataId: any): string[] => {
+	const valueId: string[] = [];
+
+	for (const item of mockDataId) {
+		valueId.push(item.id);
+	}
+
+	return valueId;
+};
+
 const AreaValueUtil = (mockDataArea: any): number[] => {
 	const valueArea: number[] = [];
 
@@ -28,4 +38,4 @@ const BarValueUtil = (mockDataBar: any): number[] => {
 	return valueBar;
 };
 
-export { labelUtil, AreaValueUtil, BarValueUtil };
+export { labelUtil, IdValueUtil, AreaValueUtil, BarValueUtil };
