@@ -1,6 +1,8 @@
 import {
   Chart as ChartJS,
   CategoryScale,
+  LineController,
+  BarController,
   LinearScale,
   PointElement,
   LineElement,
@@ -20,6 +22,8 @@ import { useTimeSeriesChartFilter } from "./TimeSeriesChartHooks";
 ChartJS.register(
   CategoryScale,
   LinearScale,
+  LineController,
+  BarController,
   PointElement,
   LineElement,
   BarElement,
