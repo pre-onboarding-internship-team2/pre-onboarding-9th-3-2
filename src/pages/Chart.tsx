@@ -41,6 +41,7 @@ export default function Chart() {
 
   return (
     <>
+      <h1 className="text-2xl mb-5 font-bold">2023-02-01</h1>
       <ChartButton
         locations={locations()}
         handleChangeLocation={handleChangeLocation}
