@@ -1,7 +1,9 @@
 # 3주차 과제
+
 주어진 데이터를 기반으로 시계열 차트 만들기
 
 ## 팀원 구성표
+
 <table>
   <tr>
     <td align="center">
@@ -76,3 +78,9 @@
 | fix      | 에러, 버그 수정  |
 | docs     | 문서수정         |
 | chores   | 기타 수정사항    |
+
+## 사용한 라이브러리
+
+## 레퍼런스
+
+AWS Cloudwatch Chart
