@@ -54,6 +54,7 @@ const HomePage: NextPage<Props> = () => {
 
   return (
     <div className="container">
+      <LinkContainer locations={locations} />
       <Chart
         ref={chartRef}
         type="line"
@@ -61,7 +62,6 @@ const HomePage: NextPage<Props> = () => {
         data={data}
         onClick={clickHandler}
       />
-      <LinkContainer locations={locations} />
     </div>
   );
 };
