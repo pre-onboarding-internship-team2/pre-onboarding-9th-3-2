@@ -1,14 +1,13 @@
-import { useLocation, useSearchParams } from "react-router-dom";
-import { reduceById } from "../functions/filterFunc";
+import { useSearchParams } from "react-router-dom";
+import { reduceById } from "../functions/reduceDataFunc";
 
 const Filter = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const location = useLocation();
 
   const idArray = reduceById();
 
   const handleFilter = (id: string) => {
-    const currentParams = new URLSearchParams(location.search).get("id");
+    const currentParams = searchParams.get("id");
     if (currentParams === id) {
       setSearchParams();
       return;
@@ -24,9 +23,9 @@ const Filter = () => {
       >
         전체
       </button>
-      {idArray.map((id) => (
+      {idArray.map((id, index) => (
         <button
-          key={idArray.indexOf(id)}
+          key={index}
           onClick={() => handleFilter(id)}
           className="w-16 h-8 mx-4 border-2 border-black rounded-xl font-bold"
         >
