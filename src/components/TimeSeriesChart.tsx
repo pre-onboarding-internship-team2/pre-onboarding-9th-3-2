@@ -11,8 +11,10 @@ import {
   BarElement,
   LogarithmicScale,
 } from "chart.js";
-import { MouseEvent, useRef, useState } from "react";
-import { Chart, getElementAtEvent } from "react-chartjs-2";
+import { useRef } from "react";
+import { Chart } from "react-chartjs-2";
+import TimeSeriesChartFilter from "./TimeSeriesChartFilter";
+import { useTimeSeriesChartFilter } from "./TimeSeriesChartHooks";
 
 ChartJS.register(
   CategoryScale,
@@ -31,60 +33,19 @@ export type TimeSeriesProps = {
   xAxisData: string[];
   yAxisLeft: { name: string; data: number[] };
   yAxisRight: { name: string; data: number[] };
-  filterIds?: { name: string; data: string[] };
+  filterIds: { name: string; data: string[] };
 };
 
 export default function TimeSeriesChart({ props }: { props: TimeSeriesProps }) {
   const { xAxisData, yAxisLeft, yAxisRight, filterIds } = props;
-  const filterIdSet = [...new Set(filterIds?.data)];
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-
   const chartRef = useRef<ChartJS>(null);
-  const onClickChart = (event: MouseEvent<HTMLCanvasElement>) => {
-    const { current: chart } = chartRef;
 
-    if (!chart) return;
-    const element = getElementAtEvent(chart, event);
-    if (!element[0]) return;
-    const { index } = element[0];
+  const filterProps = useTimeSeriesChartFilter({ filterIds, chartRef });
+  const { selectedIds, onClickChart } = filterProps;
 
-    const filterId = filterIds?.data[index];
-    if (!filterId) return;
-    setSelectedIds(
-      selectedIds.includes(filterId)
-        ? selectedIds.filter((selectedId) => selectedId !== filterId)
-        : [...selectedIds, filterId]
-    );
-  };
   return (
     <>
-      {filterIdSet.length <= 0 ? null : (
-        <>
-          {filterIdSet.map((filterId) => (
-            <button
-              key={filterId}
-              onClick={() => {
-                setSelectedIds(
-                  selectedIds.includes(filterId)
-                    ? selectedIds.filter(
-                        (selectedId) => selectedId !== filterId
-                      )
-                    : [...selectedIds, filterId]
-                );
-              }}
-            >
-              {filterId}
-            </button>
-          ))}
-          <button
-            onClick={() => {
-              setSelectedIds([]);
-            }}
-          >
-            reset
-          </button>
-        </>
-      )}
+      <TimeSeriesChartFilter {...filterProps} />
       <Chart
         ref={chartRef}
         onClick={onClickChart}
