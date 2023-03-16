@@ -14,9 +14,9 @@ export default function App() {
           ...acc.yAxisRight,
           data: [...acc.yAxisRight.data, data.value_bar],
         },
-        extraInfo: {
-          ...acc.extraInfo!,
-          data: [...acc.extraInfo!.data, data.id],
+        filterIds: {
+          ...acc.filterIds!,
+          data: [...acc.filterIds!.data, data.id],
         },
       };
     },
@@ -24,7 +24,7 @@ export default function App() {
       xAxisData: [],
       yAxisLeft: { name: "Area", data: [] },
       yAxisRight: { name: "Bar", data: [] },
-      extraInfo: { name: "ID", data: [] },
+      filterIds: { name: "ID", data: [] },
     }
   );
 
