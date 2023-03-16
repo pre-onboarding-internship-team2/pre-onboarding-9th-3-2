@@ -16,11 +16,12 @@ import {
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
 import {
-  reduceBySecond,
+  reduceByMinutes,
   reduceAreaData,
   reduceBarData,
   reduceDataColor,
 } from "../functions/filterFunc";
+import { dataArray } from "../functions/funcData";
 
 ChartJS.register(
   LinearScale,
@@ -36,7 +37,7 @@ ChartJS.register(
   BarController
 );
 
-const labels = reduceBySecond();
+const labels = reduceByMinutes();
 
 const options: ChartOptions = {
   responsive: true,
@@ -47,6 +48,14 @@ const options: ChartOptions = {
     title: {
       display: true,
       text: "초 단위 데이터 변동그래프",
+    },
+    tooltip: {
+      callbacks: {
+        label: (context) => {
+          const idx = context.dataIndex;
+          return `${Object.values(dataArray[idx])[0].id} : ${context.raw}`;
+        },
+      },
     },
   },
   scales: {
