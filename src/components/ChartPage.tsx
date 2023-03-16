@@ -1,5 +1,10 @@
 import mockData from "../data/mockData.json";
-import { labelUtil, AreaValueUtil, BarValueUtil } from "../utility/controlData";
+import {
+	labelUtil,
+	IdValueUtil,
+	AreaValueUtil,
+	BarValueUtil,
+} from "../utility/controlData";
 
 import {
 	Chart as ChartJS,
@@ -32,6 +37,7 @@ const ChartPage = () => {
 	const allValue = Object.values(mockData.response);
 
 	const labels: string[] = [...labelUtil(allKey)];
+	const valueId: string[] = [...IdValueUtil(allValue)];
 	const valueArea: number[] = [...AreaValueUtil(allValue)];
 	const valueBar: number[] = [...BarValueUtil(allValue)];
 
@@ -46,6 +52,16 @@ const ChartPage = () => {
 			title: {
 				display: true,
 				text: "Flexsys",
+			},
+			tooltip: {
+				backgroundColor: "rgba(9, 9, 9, 0.4)",
+				callbacks: {
+					title: (data: any) => {
+						const dataIndex = data[0].dataIndex;
+						const locationData = data[0].dataset.dataLocation[dataIndex];
+						return locationData;
+					},
+				},
 			},
 		},
 		scales: {
@@ -75,6 +91,7 @@ const ChartPage = () => {
 				borderWidth: 2,
 				fill: false,
 				data: valueArea.map((element) => element),
+				dataLocation: valueId.map((element) => element),
 				yAxisID: "y",
 			},
 			{
