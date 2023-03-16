@@ -17,6 +17,7 @@ import {
 } from 'recharts';
 import ChartTooltip from 'components/ChartTooltip';
 import ChartButton from 'components/ChartButton';
+import CustomDot from 'components/CustomDot';
 
 export default function Chart() {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ export default function Chart() {
   const handleClick = (data: any) => {
     if (!data.activePayload) return null;
     setSearchParams({ id: data.activePayload[0].payload.id });
+    console.log(data);
   };
 
   return (
@@ -85,16 +87,10 @@ export default function Chart() {
             yAxisId="left"
             dataKey="value_area"
             type="monotone"
-            fill="url(#color)"
+            fill="#38A5FF"
             stroke="#38A5FF"
-            
+            dot={<CustomDot currentParams={currentParams} />}
           />
-          <defs>
-            <linearGradient id="color" x1="0" y1="1.5" x2="0" y2="0">
-              <stop offset="30%" stopColor="#38A5FF" stopOpacity={0.5} />
-              <stop offset="95%" stopColor="#38A5FF" stopOpacity={0.5} />
-            </linearGradient>
-          </defs>
         </ComposedChart>
       </ResponsiveContainer>
     </>
