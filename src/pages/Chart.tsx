@@ -1,4 +1,6 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import useChart from 'hooks/useChart';
 
 import {
@@ -17,23 +19,34 @@ import ChartTooltip from 'components/ChartTooltip';
 import ChartButton from 'components/ChartButton';
 
 export default function Chart() {
+  const navigate = useNavigate();
   const { chartDatas, locations } = useChart();
-  const [location, setLocation] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentParams = searchParams.get('id');
 
   const handleChangeLocation = (value: string) => {
-    setLocation(value);
+    if (value === '필터해제') {
+      navigate('/');
+    } else {
+      setSearchParams({ id: value });
+    }
   };
 
-  const handleClick = (value: string) => {
-    setLocation(value);
+  const handleClick = (data: any) => {
+    if (!data.activePayload) return null;
+    setSearchParams({ id: data.activePayload[0].payload.id });
   };
 
   return (
     <>
-      <ChartButton locations={locations()} handleChangeLocation={handleChangeLocation} />
-      <ResponsiveContainer width="100%" aspect={4 / 1}>
+      <ChartButton
+        locations={locations()}
+        handleChangeLocation={handleChangeLocation}
+        currentParams={currentParams}
+      />
+      <ResponsiveContainer width="100%" aspect={3 / 1}>
         <ComposedChart
-          height={400}
+          onClick={handleClick}
           data={chartDatas}
           className="mx-auto"
           margin={{
@@ -60,24 +73,28 @@ export default function Chart() {
           />
           <Tooltip content={<ChartTooltip />} />
           <Legend />
-          <Bar
-            yAxisId="right"
-            onClick={(value) => handleClick(value.id)}
-            dataKey="value_bar"
-            barSize={20}
-            fill="#AFE7FF"
-          >
+          <Bar yAxisId="right" dataKey="value_bar" barSize={20} fill="#AFE7FF">
             {chartDatas.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.id === location ? '#3FCAFF' : '#AFE7FF'} />
+              <Cell
+                key={`cell-${index}`}
+                fill={entry.id === currentParams ? '#3FCAFF' : '#AFE7FF'}
+              />
             ))}
           </Bar>
           <Area
             yAxisId="left"
             dataKey="value_area"
             type="monotone"
-            fill="#38A5FF"
+            fill="url(#color)"
             stroke="#38A5FF"
+            
           />
+          <defs>
+            <linearGradient id="color" x1="0" y1="1.5" x2="0" y2="0">
+              <stop offset="30%" stopColor="#38A5FF" stopOpacity={0.5} />
+              <stop offset="95%" stopColor="#38A5FF" stopOpacity={0.5} />
+            </linearGradient>
+          </defs>
         </ComposedChart>
       </ResponsiveContainer>
     </>
