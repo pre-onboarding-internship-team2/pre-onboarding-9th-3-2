@@ -3,10 +3,10 @@ import { Chart as ChartJS, ChartData } from 'chart.js';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getElementsAtEvent } from 'react-chartjs-2';
 import httpClient from '../api/httpClient';
-import { Y_AXIS_KEY } from '../consts/chart.const';
 import { TimeSeriesChartDataType } from '../types/chartData.types';
 import { LocationDataType } from '../types/response.types';
 import { getChartData } from '../utils/getChartData';
+import { getDatasetStyleByFilter } from '../utils/getDatasetStyleByFilter';
 import getUniqueLocations from '../utils/getUniqueLocations';
 import useFilterQueryString, { QUERY_STRING_KEY } from './useFilterQueryString';
 
@@ -28,22 +28,9 @@ function useChartData() {
 
         const [areaDataset] = chartData.datasets;
 
-        const newChartDatasetStyle = areaDataset.data.reduce<{
-            areaPointBorderWidth: number[];
-            barBackgroundColor: string[];
-        }>(
-            (obj, current) => {
-                const isIdMatched = current[Y_AXIS_KEY].id === filterId;
-
-                const newBorderWidth = isIdMatched ? 2 : 0;
-                const newColor = isIdMatched ? 'rgba(54,162,235,1)' : 'rgba(54,162,235,0.4)';
-
-                return {
-                    areaPointBorderWidth: [...obj.areaPointBorderWidth, newBorderWidth],
-                    barBackgroundColor: [...obj.barBackgroundColor, newColor],
-                };
-            },
-            { areaPointBorderWidth: [], barBackgroundColor: [] },
+        const { areaPointBorderWidth, barBackgroundColor } = getDatasetStyleByFilter(
+            areaDataset.data,
+            filterId,
         );
 
         setChartData(({ datasets }) => {
@@ -52,9 +39,9 @@ function useChartData() {
                 datasets: [
                     {
                         ...areaDataset,
-                        pointBorderWidth: newChartDatasetStyle.areaPointBorderWidth,
+                        pointBorderWidth: areaPointBorderWidth,
                     },
-                    { ...barDataset, backgroundColor: newChartDatasetStyle.barBackgroundColor },
+                    { ...barDataset, backgroundColor: barBackgroundColor },
                 ],
             };
         });
