@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import { useRef } from "react";
 import { Chart } from "react-chartjs-2";
+import { color } from "./TImeSeriesChart.style";
 import TimeSeriesChartFilter from "./TimeSeriesChartFilter";
 import { useTimeSeriesChartFilter } from "./TimeSeriesChartHooks";
 
@@ -31,8 +32,18 @@ ChartJS.register(
 
 export type TimeSeriesProps = {
   xAxisData: string[];
-  yAxisLeft: { name: string; data: number[] };
-  yAxisRight: { name: string; data: number[] };
+  yAxisLeft: {
+    name: string;
+    data: number[];
+    min?: number;
+    max?: number;
+  };
+  yAxisRight: {
+    name: string;
+    data: number[];
+    min?: number;
+    max?: number;
+  };
   filterIds: { name: string; data: string[] };
 };
 
@@ -60,12 +71,16 @@ export default function TimeSeriesChart({ props }: { props: TimeSeriesProps }) {
               display: true,
               position: "left" as const,
               title: { display: true, text: yAxisLeft.name },
+              min: yAxisLeft.min,
+              max: yAxisLeft.max,
             },
             yRight: {
               type: "linear" as const,
               display: true,
               position: "right" as const,
               title: { display: true, text: yAxisRight.name },
+              min: yAxisRight.min,
+              max: yAxisRight.max,
             },
           },
           plugins: {
@@ -92,11 +107,15 @@ export default function TimeSeriesChart({ props }: { props: TimeSeriesProps }) {
               data: yAxisLeft.data,
               pointBackgroundColor: filterIds
                 ? filterIds.data.map((filterId) =>
-                    selectedIds.includes(filterId) ? "#ff0000" : "#94b799"
+                    selectedIds.includes(filterId)
+                      ? color.dataset1_selected
+                      : color.dataset1_blur
                   )
-                : "#94b799",
+                : color.dataset1_default,
               backgroundColor:
-                selectedIds.length > 0 ? "#a3c2a822" : "#a3c2a880",
+                selectedIds.length > 0
+                  ? color.dataset1_blur
+                  : color.dataset1_default,
             },
             {
               type: "bar" as const,
@@ -105,9 +124,11 @@ export default function TimeSeriesChart({ props }: { props: TimeSeriesProps }) {
               data: yAxisRight.data,
               backgroundColor: filterIds
                 ? filterIds.data.map((filterId) =>
-                    selectedIds.includes(filterId) ? "#0092e0aa" : "#7fc7efaa"
+                    selectedIds.includes(filterId)
+                      ? color.dataset2_selected
+                      : color.dataset2_blur
                   )
-                : "#7fc7efaa",
+                : color.dataset2_default,
             },
           ],
         }}

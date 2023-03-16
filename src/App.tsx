@@ -22,7 +22,7 @@ export default function App() {
     },
     {
       xAxisData: [],
-      yAxisLeft: { name: "Area", data: [] },
+      yAxisLeft: { name: "Area", data: [], max: 200 },
       yAxisRight: { name: "Bar", data: [] },
       filterIds: { name: "ID", data: [] },
     }
