@@ -7,25 +7,47 @@
 ```
 npm install
 
-npm run dev // development server
+npm run dev // start development server
 
 npm run build // build
 
-npm start // production server
+npm start // start production server
 ```
 
 ## 기술
 
 - 언어
 
-  - Typescript
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=plastic&logo=TypeScript&logoColor=white" />
 
 - 라이브러리
 
-  - chart.js && react-chartjs-2
+  <img src="https://img.shields.io/badge/Chart.js-FF6384?style=plastic&logo=Chart.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/react chartjs 2-61DAFB?style=plastic&logo=react chartjs 2&logoColor=white" />
+  <img src="https://img.shields.io/badge/React Query-FF4154?style=plastic&logo=React Query&logoColor=white" />
 
 - 프레임워크
-  - Next JS
+
+  <img src="https://img.shields.io/badge/Next.js-000000?style=plastic&logo=Next.js&logoColor=white" />
+
+## 프로젝트 구조
+
+```
+pages
+ ┣ index.tsx // 메인 페이지
+ ┣ _app.tsx // 글로벌
+ ┗ _document.tsx
+ utils
+ ┣ chart-api.ts // 차트 REST API 함수
+ ┣ chart-api.types.ts // 차트 REST API 함수 타입
+ ┣ chart-data.ts // 차트 데이터
+ ┣ chart-options.ts // 차트 옵션
+ ┗ chart.types.ts // 차트 타입
+ hooks
+ ┗ useChartQuery.ts // 차트 데이터 페칭
+ components
+ ┗ link-container.tsx // url 링크
+```
 
 ## 팀원 구성표
 

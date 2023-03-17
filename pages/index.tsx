@@ -1,99 +1,79 @@
+import { useRef } from "react";
 import { GetStaticProps, NextPage } from "next";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  PointElement,
-  LineElement,
-  Filler,
-} from "chart.js";
+import { useRouter } from "next/router";
 import { Chart } from "react-chartjs-2";
-import { getChartInfo } from "@/utils/chart-api";
+import { ChartJSOrUndefined } from "react-chartjs-2/dist/types";
+import { QueryClient, dehydrate } from "@tanstack/react-query";
+import { getChartInfo, loadChart } from "@/utils/chart-api";
 import { options } from "@/utils/chart-options";
-
-interface ChartsType {
-  time: string;
-  id: string;
-  value_area: string;
-  value_bar: string;
-}
+import { ChartsType } from "@/utils/chart.types";
+import { chartDatasets } from "@/utils/chart-data";
+import { useChartQuery } from "@/hooks/useChartQuery";
+import LinkContainer from "@/components/link-container";
 
 interface Props {
-  charts: ChartsType[];
+  chartData: ChartsType[];
+  colorFilteredByQueryWithBar: string[];
+  colorFilteredByQueryWithArea: string[];
 }
 
-ChartJS.register(
-  LinearScale,
-  CategoryScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend,
-);
+loadChart();
 
-const HomePage: NextPage<Props> = ({ charts }) => {
-  const labels = charts.map((chart) => `${chart.id} / ${chart.time.slice(11)}`);
+const HomePage: NextPage<Props> = () => {
+  const router = useRouter();
+  const {
+    chartData,
+    colorFilteredByQueryWithArea,
+    colorFilteredByQueryWithBar,
+  } = useChartQuery(router.query as { name: string });
+  const chartRef = useRef<ChartJSOrUndefined<"bar" | "line", string[]>>(null);
+  const locations = [...new Set(chartData.map((chart) => chart.id))];
+  const data = chartDatasets(
+    chartData,
+    colorFilteredByQueryWithArea,
+    colorFilteredByQueryWithBar,
+  );
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        type: "bar" as const,
-        label: "Bar",
-        yAxisID: "bar",
-        data: charts.map((chart) => chart.value_bar),
-        backgroundColor: "rgba(0,128,128, 0.5)",
-        hoverBackgroundColor: "rgba(0, 128,128, 1)",
-      },
-      {
-        type: "line" as const,
-        label: "Area",
-        yAxisID: "area",
-        data: charts.map((chart) => chart.value_area),
-        backgroundColor: "rgba(238,130,238, 1)",
-        fill: true,
-      },
-    ],
+  const clickHandler = (e: any) => {
+    if (chartRef.current) {
+      const points = chartRef.current.getElementsAtEventForMode(
+        e,
+        "index",
+        { intersect: true },
+        true,
+      );
+      if (points.length > 0) {
+        const routingName = chartData[points[0].index].id;
+        const routingNumber =
+          locations.findIndex((location) => location === routingName) + 1;
+        router.push(`/?name=${routingName}&nameId=${routingNumber}`);
+      }
+    }
+    return;
   };
 
   return (
-    <Chart
-      style={{
-        position: "relative",
-        maxWidth: "90vw",
-        height: "70vh",
-        maxHeight: "70vh",
-      }}
-      type="bar"
-      options={options}
-      data={data}
-    />
+    <div className="container">
+      <LinkContainer locations={locations} />
+      <Chart
+        ref={chartRef}
+        type="line"
+        options={options}
+        data={data}
+        onClick={clickHandler}
+      />
+    </div>
   );
 };
 
 export default HomePage;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const data = await getChartInfo();
-  const charts = [];
-
-  for (const key in data) {
-    charts.push({
-      time: key,
-      id: data[key].id,
-      value_area: data[key].value_area,
-      value_bar: data[key].value_bar,
-    });
-  }
-
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(["charts"], getChartInfo);
   return {
-    props: { charts },
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
   };
 };
