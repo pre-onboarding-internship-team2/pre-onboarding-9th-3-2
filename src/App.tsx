@@ -14,12 +14,17 @@ export default function App() {
           ...acc.yAxisRight,
           data: [...acc.yAxisRight.data, data.value_bar],
         },
+        filterIds: {
+          ...acc.filterIds,
+          data: [...acc.filterIds.data, data.id],
+        },
       };
     },
     {
       xAxisData: [],
-      yAxisLeft: { name: "Area", data: [] },
+      yAxisLeft: { name: "Area", data: [], max: 200 },
       yAxisRight: { name: "Bar", data: [] },
+      filterIds: { name: "ID", data: [] },
     }
   );
 
