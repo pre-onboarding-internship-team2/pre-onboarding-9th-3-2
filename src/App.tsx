@@ -15,8 +15,8 @@ export default function App() {
           data: [...acc.yAxisRight.data, data.value_bar],
         },
         filterIds: {
-          ...acc.filterIds!,
-          data: [...acc.filterIds!.data, data.id],
+          ...acc.filterIds,
+          data: [...acc.filterIds.data, data.id],
         },
       };
     },

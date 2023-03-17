@@ -15,14 +15,10 @@ export function useTimeSeriesChartFilter({
   const resetSelectedId = () => setSelectedIds([]);
 
   const onClickChart = (event: MouseEvent<HTMLCanvasElement>) => {
-    const { current: chart } = chartRef;
-    if (!chart) return;
-
-    const element = getElementAtEvent(chart, event);
+    const chart = chartRef.current;
+    const element = getElementAtEvent(chart!, event);
     if (!element[0]) return;
-
-    const filterId = filterIds?.data[element[0].index];
-    if (!filterId) return;
+    const filterId = filterIds.data[element[0].index];
 
     setSelectedIds(
       selectedIds.includes(filterId)
