@@ -56,10 +56,7 @@ npm run dev
 | 프레임워크 | React (Vite) | - CRA와 비교했을 때 매우 효율적으로 번들링 작업 진행 |
 | 언어 | Typescript(Javascript) | - 더 안정적인 코드 작성: 컴파일 과정에서 버그를 사전에 찾을 수 있음 <br /> - 개발 생산성 향상: 자동완성, 타입체크, 에러 표시 도구 제공 <br /> - 코드 가독성 향상: 개발자가 코드를 이해하고 유지보수하기 쉽게 만듦 |
 | 라우팅 처리 | react-router-dom | params를 이용한 필터링 적용 |
-| 차트 라이브러리 | Chart.js (react-chartjs-2 ) | - 인기 많은 차트 라이브러리
-- 작은 번들 사이즈
-- canvas 기반으로 DOM에 부담 적음
-- TS로 작성되어 있음 |
+| 차트 라이브러리 | Chart.js (react-chartjs-2 ) | - 인기 많은 차트 라이브러리 <br /> - 작은 번들 사이즈 <br />- canvas 기반으로 DOM에 부담 적음 <br /> - TS로 작성되어 있음|
 | 코드 포매팅 | ESLint |  |
 | 배포 | netlify | - Github 레포지토리와 연동하여 배포 |
 
@@ -94,13 +91,6 @@ https://user-images.githubusercontent.com/87600354/225897739-feefe517-51c8-4f60-
 <td align="center">
 <a href="https://github.com/foreknowledge">
 <img src="https://avatars.githubusercontent.com/u/29790944?v=4" width="100px;" alt=""/>
-<br />
-<sub><b>김예지</b></sub>
-</a>
-</td>
-<td align="center">
-<a href="https://github.com/ggsno">
-<img src="https://avatars.githubusercontent.com/u/46833758?v=4" width="100px;" alt=""/>
 <br />
 <sub><b>오강산</b></sub>
 </a>
@@ -149,13 +139,6 @@ https://user-images.githubusercontent.com/87600354/225897739-feefe517-51c8-4f60-
 <sub><b>오준석</b></sub>
 </a>
 </td>
-<td align="center">
-<a href="https://github.com/pre-onboarding-internship-team2">
-<img src="https://avatars.githubusercontent.com/u/125961436?s=200&v=4" width="100px;" alt=""/>
-<br />
-<sub><b>2팀</b></sub>
-</a>
-</td>
 </tr>
 </table>
 
@@ -200,4 +183,3 @@ https://user-images.githubusercontent.com/87600354/225897739-feefe517-51c8-4f60-
     - 자신의 코드를 설명하고 Best Practice에 대한 의견 교환 및 소통하는 연습 🤗
 5. 디스코드 회의 이후 다른 팀원의 코드와 작업방식, PR에서 받은 코멘트를 참고하여 자신의 프로젝트를 개선
 6. 마지막에 팀원끼리 투표를 진행하여 과제로 제출할 코드 선정
-    - 다음부터는 ‘기업 과제’로서 팀원들의 코드가 어떤지 객관적으로 평가해 볼 수 있도록 채점표를 만들어 이야기를 나눠볼 예정
