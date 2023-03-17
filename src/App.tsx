@@ -4,7 +4,7 @@ import Chart from 'pages/Chart';
 
 function App() {
   return (
-    <div className="container mx-auto pt-56">
+    <div className="container mx-auto px-3 text-center pt-44">
       <Chart />
     </div>
   );
