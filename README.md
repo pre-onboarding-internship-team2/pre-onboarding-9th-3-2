@@ -82,40 +82,39 @@ https://user-images.githubusercontent.com/87600354/225897739-feefe517-51c8-4f60-
 
 
 ## 팀원 구성표 👨‍💻👩‍💻
-
 <table align="center">
 <tr>
 <td align="center">
-<a href="[https://github.com/jiyeon2](https://github.com/jiyeon2)">
-<img src="[https://avatars.githubusercontent.com/u/18395475?v=4](https://avatars.githubusercontent.com/u/18395475?v=4)" width="100px;" alt=""/>
+<a href="https://github.com/jiyeon2">
+<img src="https://avatars.githubusercontent.com/u/18395475?v=4" width="100px;" alt=""/>
 <br />
 <sub><b>이지연</b></sub>
 </a>
 </td>
 <td align="center">
-<a href="[https://github.com/foreknowledge](https://github.com/foreknowledge)">
-<img src="[https://avatars.githubusercontent.com/u/29790944?v=4](https://avatars.githubusercontent.com/u/29790944?v=4)" width="100px;" alt=""/>
+<a href="https://github.com/foreknowledge">
+<img src="https://avatars.githubusercontent.com/u/29790944?v=4" width="100px;" alt=""/>
 <br />
 <sub><b>김예지</b></sub>
 </a>
 </td>
 <td align="center">
-<a href="[https://github.com/ggsno](https://github.com/ggsno)">
-<img src="[https://avatars.githubusercontent.com/u/46833758?v=4](https://avatars.githubusercontent.com/u/46833758?v=4)" width="100px;" alt=""/>
+<a href="https://github.com/ggsno">
+<img src="https://avatars.githubusercontent.com/u/46833758?v=4" width="100px;" alt=""/>
 <br />
 <sub><b>오강산</b></sub>
 </a>
 </td>
 <td align="center">
-<a href="[https://github.com/yses9296](https://github.com/yses9296)">
-<img src="[https://avatars.githubusercontent.com/u/54027716?v=4](https://avatars.githubusercontent.com/u/54027716?v=4)" width="100px;" alt=""/>
+<a href="https://github.com/yses9296">
+<img src="https://avatars.githubusercontent.com/u/54027716?v=4" width="100px;" alt=""/>
 <br />
 <sub><b>최은서</b></sub>
 </a>
 </td>
 <td align="center">
-<a href="[https://github.com/tjswo2292](https://github.com/tjswo2292)">
-<img src="[https://avatars.githubusercontent.com/u/55657931?v=4](https://avatars.githubusercontent.com/u/55657931?v=4)" width="100px;" alt=""/>
+<a href="https://github.com/tjswo2292">
+<img src="https://avatars.githubusercontent.com/u/55657931?v=4" width="100px;" alt=""/>
 <br />
 <sub><b>최선재</b></sub>
 </a>
@@ -123,36 +122,36 @@ https://user-images.githubusercontent.com/87600354/225897739-feefe517-51c8-4f60-
 </tr>
 <tr>
 <td align="center">
-<a href="[https://github.com/jiwonmik](https://github.com/jiwonmik)">
-<img src="[https://avatars.githubusercontent.com/u/59993029?v=4](https://avatars.githubusercontent.com/u/59993029?v=4)" width="100px;" alt=""/>
+<a href="https://github.com/jiwonmik">
+<img src="https://avatars.githubusercontent.com/u/59993029?v=4" width="100px;" alt=""/>
 <br />
 <sub><b>김지원</b></sub>
 </a>
 </td>
 <td align="center">
-<a href="[https://github.com/onezeun](https://github.com/onezeun)">
-<img src="[https://avatars.githubusercontent.com/u/78632052?v=4](https://avatars.githubusercontent.com/u/78632052?v=4)" width="100px;" alt=""/>
+<a href="https://github.com/onezeun">
+<img src="https://avatars.githubusercontent.com/u/78632052?v=4" width="100px;" alt=""/>
 <br />
 <sub><b>한지은</b></sub>
 </a>
 </td>
 <td align="center">
-<a href="[https://github.com/iuesver](https://github.com/iuesver)">
-<img src="[https://avatars.githubusercontent.com/u/87600354?v=4](https://avatars.githubusercontent.com/u/87600354?v=4)" width="100px;" alt=""/>
+<a href="https://github.com/iuesver">
+<img src="https://avatars.githubusercontent.com/u/87600354?v=4" width="100px;" alt=""/>
 <br />
 <sub><b>오혁상</b></sub>
 </a>
 </td>
 <td align="center">
-<a href="[https://github.com/junseokoh-hub](https://github.com/junseokoh-hub)">
-<img src="[https://avatars.githubusercontent.com/u/99642719?v=4](https://avatars.githubusercontent.com/u/99642719?v=4)" width="100px;" alt=""/>
+<a href="https://github.com/junseokoh-hub">
+<img src="https://avatars.githubusercontent.com/u/99642719?v=4" width="100px;" alt=""/>
 <br />
 <sub><b>오준석</b></sub>
 </a>
 </td>
 <td align="center">
-<a href="[https://github.com/pre-onboarding-internship-team2](https://github.com/pre-onboarding-internship-team2)">
-<img src="[https://avatars.githubusercontent.com/u/125961436?s=200&v=4](https://avatars.githubusercontent.com/u/125961436?s=200&v=4)" width="100px;" alt=""/>
+<a href="https://github.com/pre-onboarding-internship-team2">
+<img src="https://avatars.githubusercontent.com/u/125961436?s=200&v=4" width="100px;" alt=""/>
 <br />
 <sub><b>2팀</b></sub>
 </a>
