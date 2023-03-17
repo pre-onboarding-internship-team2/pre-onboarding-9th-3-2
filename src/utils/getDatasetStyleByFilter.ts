@@ -1,4 +1,4 @@
-import { BLUE, DARK_BLUE, Y_AXIS_KEY } from '../consts/chart.const';
+import { COLORS, Y_AXIS_KEY } from '../consts/chart.const';
 import { TimeSeriesChartDataType } from '../types/chartData.types';
 import { LocationDataType } from '../types/response.types';
 
@@ -17,7 +17,7 @@ function getDatasetStyleByFilter(
             const isIdMatched = currentDataId === filterId;
 
             const newBorderWidth = isIdMatched ? 2 : 0;
-            const newColor = isIdMatched ? BLUE : DARK_BLUE;
+            const newColor = isIdMatched ? COLORS.blue.normal : COLORS.blue.dark;
 
             return {
                 areaPointBorderWidth: [...obj.areaPointBorderWidth, newBorderWidth],
