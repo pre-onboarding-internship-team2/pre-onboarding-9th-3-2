@@ -1,8 +1,10 @@
 import { useSearchParams } from 'react-router-dom';
 
-export const QUERY_STRING_KEY = 'id';
+export const QUERY_STRING_KEY = 'id' as const;
 
-export default function useFilterQueryString(key: string) {
+type filterQueryStringKeyType = 'id';
+
+export default function useFilterQueryString(key: filterQueryStringKeyType) {
     const [searchParams, setSerchParams] = useSearchParams();
 
     const filterQueryString = searchParams.get(key);
